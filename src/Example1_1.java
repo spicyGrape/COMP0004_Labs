@@ -11,8 +11,17 @@ class Example1_1 {
 
     public void inputAndProcess() {
         Input in = new Input();
-        System.out.print("Type an integer: ");
-        int n = in.nextInt();
+        int n = 0;
+        while (true) {
+            System.out.print("Enter an integer: ");
+            if (in.hasNextInt()) {
+                n = in.nextInt();
+                break;
+            } else {
+                in.nextLine();
+                System.out.println("You did not enter an integer. Please try again.");
+            }
+        }
         System.out.print("The sum of the digits of: " + n);
         System.out.println(" is: " + sumOfDigits(n));
     }
