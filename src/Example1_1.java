@@ -26,6 +26,13 @@ class Example1_1 {
         System.out.println(" is: " + sumOfDigits(n));
     }
 
+    public void guiInputAndProcess() {
+        GUIInput input = new GUIInput();
+        int n = input.readInt("Enter an integer: ");
+        System.out.print("The sum of the digits of: " + n);
+        System.out.println("is: " + sumOfDigits(n) + "\n\nPress Enter to continue...");
+    }
+
     // The main method should do no more than create the object
 // and call a method to do the work.
     public static void main(String[] args) {
