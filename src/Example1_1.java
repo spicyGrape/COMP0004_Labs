@@ -11,7 +11,7 @@ class Example1_1 {
 
     public void inputAndProcess() {
         Input in = new Input();
-        int n = 0;
+        int n;
         while (true) {
             System.out.print("Enter an integer: ");
             if (in.hasNextInt()) {
