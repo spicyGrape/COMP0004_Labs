@@ -1,7 +1,6 @@
 package Lab_1;
 
-import EasyIO.Input;
-import EasyIO.FileInput;
+import EasyIO.*;
 
 import java.util.ArrayList;
 

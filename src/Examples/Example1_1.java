@@ -1,5 +1,7 @@
 package Examples;
 
+import EasyIO.*;
+
 class Example1_1 {
     public int sumOfDigits(int n) {
         int sum = 0;

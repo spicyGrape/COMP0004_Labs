@@ -1,5 +1,7 @@
 package Examples;
 
+import EasyIO.*;
+
 public class Example1_2 {
     private String getFileName() {
         String fileName = "";
