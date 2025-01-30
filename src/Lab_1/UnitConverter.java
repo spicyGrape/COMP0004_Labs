@@ -1,3 +1,7 @@
+package Lab_1;
+
+import EasyIO.Input;
+
 // Written by Shuaiting Li, January 2025
 // Solution to lab sheet 1 Q1.8
 // An interactive program to convert units.

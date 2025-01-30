@@ -1,3 +1,5 @@
+package EasyIO;
+
 import java.io.BufferedWriter;
 import java.io.Closeable;
 import java.io.File;
@@ -28,7 +30,7 @@ public class FileOutput implements Closeable, Flushable {
     private final BufferedWriter writer;
 
     /**
-     * Constructor of a <code>FileOutput</code> object given a file name string.
+     * Constructor of a <code>EasyIO.FileOutput</code> object given a file name string.
      * Setting append to true will open the file in append mode.
      */
     public FileOutput(final String filename, boolean append) {
@@ -49,7 +51,7 @@ public class FileOutput implements Closeable, Flushable {
     }
 
     /**
-     * Constructor of a <code>FileOutput</code> object given a <code>File</code> object.
+     * Constructor of a <code>EasyIO.FileOutput</code> object given a <code>File</code> object.
      * Setting append to true will open the file in append mode.
      */
     public FileOutput(final File file, boolean append) {
@@ -57,7 +59,7 @@ public class FileOutput implements Closeable, Flushable {
     }
 
     /**
-     * Constructor of a <code>FileOutput</code> object given a file name string.
+     * Constructor of a <code>EasyIO.FileOutput</code> object given a file name string.
      * If the file already exists its existing contents will be overwritten.
      */
     public FileOutput(final String filename) {
@@ -65,7 +67,7 @@ public class FileOutput implements Closeable, Flushable {
     }
 
     /**
-     * Constructor of a <code>FileOutput</code> object given a <code>File</code> object.
+     * Constructor of a <code>EasyIO.FileOutput</code> object given a <code>File</code> object.
      * If the file already exists its existing contents will be overwritten.
      */
     public FileOutput(final File file) {

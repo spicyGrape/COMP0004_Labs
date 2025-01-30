@@ -1,3 +1,7 @@
+package Lab_1;
+
+import EasyIO.Input;
+
 // Written by Shuaiting Li, January 2025
 // Solution to LabSheet 1 Q1.2
 // A program that takes 10 doubles and return the average of them.

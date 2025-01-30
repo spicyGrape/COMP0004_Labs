@@ -1,3 +1,8 @@
+package Lab_1;
+
+import EasyIO.FileInput;
+import EasyIO.Input;
+
 import java.util.HashMap;
 
 // Written by Shuaiting Li, January 2025

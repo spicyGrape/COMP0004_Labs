@@ -1,4 +1,4 @@
-/**
+package EasyIO; /**
  * <p>An iterator class to input specific data types from an input stream that is reading lines of text,
  * without throwing any exceptions that require try/catch blocks. This is just a simple wrapper around
  * <code>Scanner</code> that implements a subset of the <code>Scanner</code> public interface.
@@ -12,7 +12,7 @@
  * use of an uncaught exception does not require the program using the class to include code to
  * catch the exception.
  * </p>
- * <p> Input is buffered meaning that an entire line of text is read into a buffer and then an attempt is
+ * <p> EasyIO.Input is buffered meaning that an entire line of text is read into a buffer and then an attempt is
  * made to read a value using the characters in the buffer. Reading a value only consumes as many characters
  * from the buffer as needed, leaving any characters left over still in the buffer. This means that the next attempt
  * to read input starts with the remaining content in the buffer. If all the characters are read from the buffer it
@@ -34,15 +34,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Input implements Closeable, Iterator<String>
-{
+public class Input implements Closeable, Iterator<String> {
     /**
      * A reference to the wrapped <code>Scanner</code> that supplies all the actual input
      * functionality.
      * <p/>
      * <p>This is protected and not final rather than private and final (as we might have
-     * expected it to be) so that <code>FileInput</code> can access the variable.  This is
-     * necessary because <code>FileInput</code> needs to manage what happens when opening
+     * expected it to be) so that <code>EasyIO.FileInput</code> can access the variable.  This is
+     * necessary because <code>EasyIO.FileInput</code> needs to manage what happens when opening
      * a file.</p>
      */
     protected Scanner scanner;
@@ -57,37 +56,33 @@ public class Input implements Closeable, Iterator<String>
     private boolean throwIllegalStateException = false;
 
     /**
-     * The default constructor of an <code>Input</code> that assumes <code>System.in</code> is to
+     * The default constructor of an <code>EasyIO.Input</code> that assumes <code>System.in</code> is to
      * be the <code>InputStream</code> used.
      */
-    public Input()
-    {
+    public Input() {
         this(System.in);
     }
 
     /**
-     * Constructor of an <code>Input</code> object given an <code>InputStream</code> object.
+     * Constructor of an <code>EasyIO.Input</code> object given an <code>InputStream</code> object.
      */
-    public Input(final InputStream in)
-    {
+    public Input(final InputStream in) {
         this.scanner = new Scanner(in);
     }
 
     /**
-     * Constructor of an <code>Input</code> object given a <code>Readable</code> object.
+     * Constructor of an <code>EasyIO.Input</code> object given a <code>Readable</code> object.
      */
-    public Input(final Readable in)
-    {
+    public Input(final Readable in) {
         this.scanner = new Scanner(in);
     }
 
     /**
-     * Constructor of an <code>Input</code> object given a <code>Scanner</code> object.
+     * Constructor of an <code>EasyIO.Input</code> object given a <code>Scanner</code> object.
      * This allows a different <code>Scanner</code> to be used for the input, primarily to enable testing
      * of the class.
      */
-    public Input(final Scanner scanner)
-    {
+    public Input(final Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -101,14 +96,11 @@ public class Input implements Closeable, Iterator<String>
      * input a second time.
      */
     @Override
-    public synchronized void close()
-    {
-        if (!closed)
-        {
+    public synchronized void close() {
+        if (!closed) {
             scanner.close();
             closed = true;
-        } else
-        {
+        } else {
             System.err.println("Warning: Attempted to close an already closed input.");
         }
     }
@@ -117,8 +109,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is more input in the buffer, <code>false</code> otherwise.
      */
     @Override
-    public synchronized boolean hasNext()
-    {
+    public synchronized boolean hasNext() {
         return handleInput(scanner::hasNext, false, "Any type");
     }
 
@@ -127,8 +118,7 @@ public class Input implements Closeable, Iterator<String>
      * stream. Or return an empty string by default if there is no valid input.
      */
     @Override
-    public synchronized String next()
-    {
+    public synchronized String next() {
         return handleInput(scanner::next, "", "String");
     }
 
@@ -139,8 +129,7 @@ public class Input implements Closeable, Iterator<String>
      * a "do nothing" method.
      */
     @Override
-    public synchronized void remove()
-    {
+    public synchronized void remove() {
         // Method not supported
     }
 
@@ -149,8 +138,7 @@ public class Input implements Closeable, Iterator<String>
      * otherwise.
      * NB This method will return false when there is a single end-of-line left in the file.
      */
-    public synchronized boolean hasNextChar()
-    {
+    public synchronized boolean hasNextChar() {
         return handleInput(scanner::hasNext, false, "char");
     }
 
@@ -158,8 +146,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>char</code> in the input stream. Or return the null character by default
      * if there is no valid input.
      */
-    public synchronized char nextChar()
-    {
+    public synchronized char nextChar() {
         return handleInput(() ->
                 {
                     String result = scanner.findWithinHorizon("(?s).", 1);
@@ -172,8 +159,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is an <code>int</code> to input, <code>false</code>
      * otherwise.
      */
-    public synchronized boolean hasNextInt()
-    {
+    public synchronized boolean hasNextInt() {
         return handleInput(scanner::hasNextInt, false, "int");
     }
 
@@ -181,8 +167,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>int</code> in the input stream assumed to be in the default radix
      * which is 10. Or return zero by default if there is no valid input.
      */
-    public synchronized int nextInt()
-    {
+    public synchronized int nextInt() {
         return handleInput(scanner::nextInt, 0, "int");
     }
 
@@ -191,8 +176,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>int</code> in the input stream using the radix
      * <code>radix</code>. Or return zero by default if there is no valid input.
      */
-    public synchronized int nextInt(final int radix)
-    {
+    public synchronized int nextInt(final int radix) {
         return handleInput(() -> scanner.nextInt(radix), 0, "int");
     }
 
@@ -200,8 +184,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is a <code>long</code> to input, <code>false</code>
      * otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextLong()
-    {
+    public synchronized boolean hasNextLong() {
         return handleInput(scanner::hasNextLong, false, "long");
     }
 
@@ -209,8 +192,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>long</code> in the input stream assumed to be in the default radix
      * which is 10. Or return zero by default if there is no valid input.
      */
-    public synchronized long nextLong()
-    {
+    public synchronized long nextLong() {
         return handleInput(scanner::nextLong, 0L, "long");
     }
 
@@ -219,8 +201,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>long</code> in the input stream using the radix
      * <code>radix</code>. Or return zero by default if there is no valid input.
      */
-    public synchronized long nextLong(final int radix)
-    {
+    public synchronized long nextLong(final int radix) {
         return handleInput(() -> scanner.nextLong(radix), 0L, "long");
     }
 
@@ -228,8 +209,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is a <code>BigInteger</code> to input, <code>false</code>
      * otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextBigInteger()
-    {
+    public synchronized boolean hasNextBigInteger() {
         return handleInput(scanner::hasNextBigInteger, false, "BigInteger");
     }
 
@@ -237,8 +217,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>BigInteger</code> in the input stream assumed to be in the default
      * radix which is 10. Or return zero by default if there is no valid input.
      */
-    public synchronized BigInteger nextBigInteger()
-    {
+    public synchronized BigInteger nextBigInteger() {
         return handleInput(scanner::nextBigInteger, BigInteger.ZERO, "BigInteger");
     }
 
@@ -247,8 +226,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>BigInteger</code> in the input stream using the radix
      * <code>radix</code. Or return zero by default if there is no valid input.
      */
-    public synchronized BigInteger nextBigInteger(final int radix)
-    {
+    public synchronized BigInteger nextBigInteger(final int radix) {
         return handleInput(() -> scanner.nextBigInteger(radix), BigInteger.ZERO, "BigInteger");
     }
 
@@ -256,8 +234,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is a <code>float</code> to input, <code>false</code>
      * otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextFloat()
-    {
+    public synchronized boolean hasNextFloat() {
         return handleInput(scanner::hasNextFloat, false, "float");
     }
 
@@ -265,8 +242,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>float</code> in the input stream. Or return zero by
      * default if there is no valid input.
      */
-    public synchronized float nextFloat()
-    {
+    public synchronized float nextFloat() {
         return handleInput(scanner::nextFloat, 0.0f, "float");
     }
 
@@ -274,8 +250,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is a <code>double</code> to input, <code>false</code>
      * otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextDouble()
-    {
+    public synchronized boolean hasNextDouble() {
         return handleInput(scanner::hasNextDouble, false, "float");
     }
 
@@ -283,8 +258,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>double</code> in the input stream. Or return zero by
      * default if there is no valid input.
      */
-    public synchronized double nextDouble()
-    {
+    public synchronized double nextDouble() {
         return handleInput(scanner::nextDouble, 0.0, "double");
     }
 
@@ -292,8 +266,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is a <code>BigDecimal</code> to input,
      * <code>false</code> otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextBigDecimal()
-    {
+    public synchronized boolean hasNextBigDecimal() {
         return handleInput(scanner::hasNextBigDecimal, false, "BigDecimal");
     }
 
@@ -301,8 +274,7 @@ public class Input implements Closeable, Iterator<String>
      * @return the next <code>BigDecimal</code> in the input stream. Or return zero by
      * default if there is no valid input.
      */
-    public synchronized BigDecimal nextBigDecimal()
-    {
+    public synchronized BigDecimal nextBigDecimal() {
         return handleInput(scanner::nextBigDecimal, BigDecimal.ZERO, "BigDecimal");
     }
 
@@ -310,8 +282,7 @@ public class Input implements Closeable, Iterator<String>
      * @return <code>true</code> if there is more input including an end of line marker,
      * <code>false</code> otherwise. Or return false by default if there is no valid input.
      */
-    public synchronized boolean hasNextLine()
-    {
+    public synchronized boolean hasNextLine() {
         return handleInput(scanner::hasNextLine, false, "String");
     }
 
@@ -319,8 +290,7 @@ public class Input implements Closeable, Iterator<String>
      * @return all the characters in the input stream up to and including the next end of line
      * marker in the input stream. Or return an empty string by default if there is no valid input.
      */
-    public synchronized String nextLine()
-    {
+    public synchronized String nextLine() {
         return handleInput(scanner::nextLine, "", "String");
     }
 
@@ -331,10 +301,10 @@ public class Input implements Closeable, Iterator<String>
      * error but there is no straightforward way for the using program to recognise it has
      * occurred.
      * If an exception is thrown, the using program will terminate if the exception is not caught.
+     *
      * @param throwIllegalStateException true if an exception is to be thrown, false otherwise.
      */
-    public synchronized void setThrowIllegalStateException(boolean throwIllegalStateException)
-    {
+    public synchronized void setThrowIllegalStateException(boolean throwIllegalStateException) {
         this.throwIllegalStateException = throwIllegalStateException;
     }
 
@@ -342,24 +312,18 @@ public class Input implements Closeable, Iterator<String>
     // comments as they are not part of the public view of the class.
 
     // Use the supplier function to get the next input and handle any exceptions that get thrown.
-    // Input can be of any of the types supported by the class.
+    // EasyIO.Input can be of any of the types supported by the class.
     // This method avoids the need to duplicate the exception handling code in all the
     // next methods.
-    private <T> T handleInput(SupplierWithException<T> supplier, T defaultValue, String type)
-    {
-        if (!closed)
-        {
-            try
-            {
+    private <T> T handleInput(SupplierWithException<T> supplier, T defaultValue, String type) {
+        if (!closed) {
+            try {
                 return supplier.get();
-            } catch (InputMismatchException e)
-            {
+            } catch (InputMismatchException e) {
                 handleInputMismatchException(type);
-            } catch (NoSuchElementException e)
-            {
+            } catch (NoSuchElementException e) {
                 handleNoSuchElementException();
-            } catch (IllegalStateException e)
-            {
+            } catch (IllegalStateException e) {
                 handleIllegalStateException();
             }
         }
@@ -368,11 +332,9 @@ public class Input implements Closeable, Iterator<String>
 
     // Output a message to standard error that the input is closed.
     // Use the flag to determine whether an exception is thrown or not.
-    private void handleIllegalStateException()
-    {
+    private void handleIllegalStateException() {
         System.err.println("IllegalStateException: The input is closed.");
-        if (throwIllegalStateException)
-        {
+        if (throwIllegalStateException) {
             throw new IllegalStateException("Scanner is closed.");
         }
     }
@@ -380,20 +342,17 @@ public class Input implements Closeable, Iterator<String>
     // Output m message to standard error that the requested input type does not match the contents
     // in the input buffer. A hasNext method should always be used before a next method to confirm that
     // the input is of the expected type.
-    private void handleInputMismatchException(String type)
-    {
-        System.err.println("InputMismatchException: Input does not match expected " + type + " type.");
+    private void handleInputMismatchException(String type) {
+        System.err.println("InputMismatchException: EasyIO.Input does not match expected " + type + " type.");
     }
 
     // Output m message to standard error that the requested input is not available.
-    private void handleNoSuchElementException()
-    {
+    private void handleNoSuchElementException() {
         System.err.println("NoSuchElementException: No input available.");
     }
 
     @FunctionalInterface
-    private interface SupplierWithException<T>
-    {
+    private interface SupplierWithException<T> {
         T get() throws InputMismatchException, NoSuchElementException, IllegalStateException;
     }
 }

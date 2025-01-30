@@ -1,3 +1,5 @@
+package Lab_1;
+
 import java.util.Random;
 
 // Written by Shuaiting Li, January 2025

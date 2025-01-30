@@ -1,3 +1,7 @@
+package Lab_1;
+
+import EasyIO.Input;
+
 // Written by Shuaiting Li, January 2025
 // Solution to Lab Sheet 1 Q1.10.
 // A program to remove all whitespaces and punctuations in a string, then decided whether it is a palindrome.

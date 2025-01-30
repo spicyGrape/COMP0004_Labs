@@ -1,3 +1,5 @@
+package EasyIO;
+
 import javax.swing.JOptionPane;
 
 public class GUIInput {

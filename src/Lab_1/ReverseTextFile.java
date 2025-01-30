@@ -1,3 +1,8 @@
+package Lab_1;
+
+import EasyIO.Input;
+import EasyIO.FileInput;
+
 import java.util.ArrayList;
 
 // Written by Shuaiting Li, January 2025
