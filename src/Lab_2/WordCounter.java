@@ -9,8 +9,6 @@ package Lab_2;
 
 import EasyIO.FileInput;
 
-import java.awt.*;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
 public class WordCounter {
@@ -50,17 +48,13 @@ public class WordCounter {
         this.lineCount = this.fileContent.size();
     }
 
-    private void countChar() {
+    private void countCharAndWord() {
         for (String line : fileContent) {
             this.charCount += countCharInLine(line);
-        }
-    }
-
-    private void countWord() {
-        for (String line : fileContent) {
             this.wordCount += countWordInLine(line);
         }
     }
+
 
     private int countWordInLine(String line) {
         int wordInLine = 0;
@@ -74,12 +68,15 @@ public class WordCounter {
                 inWord = true;
             }
         }
+        if (inWord) {
+            wordInLine += 1;
+            inWord = false;
+        }
         return wordInLine;
     }
 
     public void count() {
-        countChar();
-        countWord();
+        countCharAndWord();
         countLine();
     }
 
